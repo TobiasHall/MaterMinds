@@ -1,0 +1,78 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>netcoreapp3.0</TargetFramework>
+    <UseWPF>true</UseWPF>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Input\**" />
+    <EmbeddedResource Remove="Input\**" />
+    <None Remove="Input\**" />
+    <Page Remove="Input\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="Resources\Cursor\BlueCircle.cur" />
+    <None Remove="Resources\Cursor\GreenCircle.cur" />
+    <None Remove="Resources\Cursor\OrangeCircle.cur" />
+    <None Remove="Resources\Cursor\PurpleCircle.cur" />
+    <None Remove="Resources\Cursor\RedCircle.cur" />
+    <None Remove="Resources\Cursor\YellowCircle.cur" />
+    <None Remove="Resources\giphy.gif" />
+    <None Remove="Resources\MaterMindBackground.jpg" />
+    <None Remove="Resources\Picture\BlackHole.png" />
+    <None Remove="Resources\Picture\Earth.jpg" />
+    <None Remove="Resources\Picture\MagnifyingGlass.png" />
+    <None Remove="Resources\Picture\QuestionMark.gif" />
+    <None Remove="Resources\Picture\trashCan.png" />
+    <None Remove="Resources\Picture\WinCon.gif" />
+    <None Remove="Resources\Picture\Winner.gif" />
+    <None Remove="Resources\Sound\BlackholeSound.mp3" />
+    <None Remove="Resources\Sound\Spacemusic.mp3" />
+    <None Remove="Resources\Sound\WaterDrop.mp3" />
+    <None Remove="Resources\Text\Rules.txt" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="Resources\Sound\BlackholeSound.mp3">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Sound\Spacemusic.mp3">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Text\Rules.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Npgsql" Version="4.1.5" />
+    <PackageReference Include="PropertyChanged.Fody" Version="3.2.9" />
+    <PackageReference Include="WpfAnimatedGif" Version="2.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Resources\Cursor\RedCircle.cur" />
+    <Resource Include="Resources\Cursor\PurpleCircle.cur" />
+    <Resource Include="Resources\Cursor\OrangeCircle.cur" />
+    <Resource Include="Resources\Cursor\GreenCircle.cur" />
+    <Resource Include="Resources\Cursor\BlueCircle.cur" />
+    <Resource Include="Resources\Cursor\YellowCircle.cur" />
+    <Resource Include="Resources\Picture\BlackHole.png" />
+    <Resource Include="Resources\Picture\Earth.jpg" />
+    <Resource Include="Resources\Picture\MagnifyingGlass.png" />
+    <Resource Include="Resources\Picture\QuestionMark.gif" />
+    <Resource Include="Resources\Picture\WinCon.gif" />
+    <Resource Include="Resources\Picture\Winner.gif" />
+    <Content Include="Resources\Sound\WaterDrop.mp3">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Properties\" />
+  </ItemGroup>
+
+</Project>

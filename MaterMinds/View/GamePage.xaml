@@ -1,0 +1,839 @@
+﻿<Page x:Class="MaterMinds.GamePage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:MaterMinds"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="GamePage"
+      AllowDrop="True"
+      xmlns:gif="http://wpfanimatedgif.codeplex.com"
+      Background="{DynamicResource BackgroundIMG}">
+    <!--#region Pictures-->
+    <Grid>
+        <Image gif:ImageBehavior.AnimatedSource="/Resources/Picture/WinCon.gif"  
+           Visibility="{Binding WinOrLoss[0], FallbackValue=Hidden}"/>
+        
+        <Image gif:ImageBehavior.AnimatedSource="/Resources/Picture/WinCon.gif" 
+               gif:ImageBehavior.AnimationSpeedRatio="1.2"
+               Visibility="{Binding WinOrLoss[0], FallbackValue=Hidden}"
+               Margin="514,28,26,162"/>
+        
+        <Image gif:ImageBehavior.AnimatedSource="/Resources/Picture/WinCon.gif"  
+               gif:ImageBehavior.AnimationSpeedRatio="0.8" 
+               Visibility="{Binding WinOrLoss[0], FallbackValue=Hidden}" 
+               Margin="10,187,530,3"/>
+    <!--#endregion-->
+        
+        <Grid Name="myCanvas" 
+              VerticalAlignment="Center" 
+              HorizontalAlignment="Center">
+            
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="200"/>
+                <ColumnDefinition Width="100"/>
+                <ColumnDefinition Width="250"/>
+                <ColumnDefinition Width="250"/>
+            </Grid.ColumnDefinitions>
+            
+            <!--#region Buttons-->
+            <StackPanel Grid.Column="0">
+
+                <Button Content="Main Menu" 
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Top"
+                        Margin="15,15,0,0" 
+                        Command="{Binding MainMenuCommand}" 
+                        Style="{StaticResource RoundButtonTemplate}"
+                        FontWeight="Bold" 
+                        FontSize="15" 
+                        Width="118" 
+                        Height="32" >
+                </Button>
+                
+                <Button Content="Restart Game" 
+                        HorizontalAlignment="Left"
+                        Style="{DynamicResource RoundButtonTemplate}" 
+                        FontSize="15" 
+                        FontWeight="Bold" 
+                        Width="118" 
+                        Height="32"
+                        Margin="15,5,0,0"
+                        Command="{Binding RestartGameCommand}">
+                </Button>
+                
+                <Button Content="Highscores"
+                        HorizontalAlignment="Left"
+                        Command="{Binding ViewTopHighscoreCommand}"
+                        Style="{DynamicResource RoundButtonTemplate}" 
+                        FontSize="15" 
+                        FontWeight="Bold"
+                        Width="118" 
+                        Height="32"
+                        Margin="15,5,0,0">
+                </Button>
+                
+                <Button Content="Help" 
+                        HorizontalAlignment="Left" 
+                        Style="{DynamicResource RoundButtonTemplate}" 
+                        FontSize="15" 
+                        FontWeight="Bold"
+                        Width="118" 
+                        Height="32"
+                        Margin="15,5,0,0"
+                        Command="{Binding HelpCommand}">
+                </Button>
+            </StackPanel>
+            <!--#endregion-->
+            <!--#region Guesscontroll and BlackHole-->
+            <StackPanel Margin="0,50,0,0" 
+                        Grid.Column="1" 
+                        HorizontalAlignment="Right" 
+                        VerticalAlignment="Center">
+                
+                <local:GuessControl/>
+                
+                <Grid x:Name="blackHole" 
+                      Uid="10" 
+                      Height="100" 
+                      Width="100" 
+                      Drop="PanelDrop">
+                    
+                    <Image Source="/Resources/Picture/BlackHole.png"/>
+                    
+                </Grid>
+            </StackPanel>
+            <!--#endregion-->
+            <!--#region GameBoard-->
+            <StackPanel Grid.Column="2" 
+                        VerticalAlignment="Center">
+                
+                <Border BorderThickness="3">
+                    
+                    <WrapPanel  HorizontalAlignment="Left" 
+                                VerticalAlignment="Center">
+                        
+                        <Grid x:Uid="1" 
+                              Margin="7.5,0,7.5,0" 
+                              Width="30" 
+                              Height="30" >
+                            
+                            <Ellipse Height="30" 
+                                     Fill="{Binding CorrectAnswerArray[0].Color, FallbackValue = Transparent}"
+                                     Visibility="{Binding IsHidden}"/>
+                            
+                            <Image gif:ImageBehavior.AnimatedSource="/Resources/Picture/QuestionMark.gif" 
+                                   gif:ImageBehavior.RepeatBehavior="1x" gif:ImageBehavior.AnimationSpeedRatio="10"
+                                   Visibility="{Binding GifVisibility}"/>
+                        </Grid>
+                        
+                        <Grid x:Uid="2" 
+                              Margin="7.5,0,7.5,0"
+                              Width="30" 
+                              Height="30" >
+                            
+                            <Ellipse Height="30" 
+                                     Fill="{Binding CorrectAnswerArray[1].Color, FallbackValue = Transparent}"
+                                     Visibility="{Binding IsHidden}"/>
+                            
+                            <Image gif:ImageBehavior.AnimatedSource="/Resources/Picture/QuestionMark.gif" 
+                                   gif:ImageBehavior.RepeatBehavior="2x" 
+                                   gif:ImageBehavior.AnimationSpeedRatio="10"
+                                   Visibility="{Binding GifVisibility}"/>
+                        </Grid>
+                        
+                        <Grid x:Uid="3" 
+                              Margin="7.5,0,7.5,0" 
+                              Width="30" 
+                              Height="30">
+                            <Ellipse Height="30" 
+                                     Fill="{Binding CorrectAnswerArray[2].Color, FallbackValue = Transparent}"
+                                     Visibility="{Binding IsHidden}"/>
+                            <Image gif:ImageBehavior.AnimatedSource="/Resources/Picture/QuestionMark.gif" 
+                                   gif:ImageBehavior.RepeatBehavior="3x" 
+                                   gif:ImageBehavior.AnimationSpeedRatio="10"
+                                   Visibility="{Binding GifVisibility}"/>
+                        </Grid>
+                        
+                        <Grid x:Uid="4" 
+                              Margin="7.5,0,7.5,0" 
+                              Width="30" 
+                              Height="30">
+                            <Ellipse Height="30" 
+                                     Fill="{Binding CorrectAnswerArray[3].Color, FallbackValue= Transparent}"
+                                     Visibility="{Binding IsHidden}"/>
+                            <Image gif:ImageBehavior.AnimatedSource="/Resources/Picture/QuestionMark.gif" 
+                                   gif:ImageBehavior.RepeatBehavior="4x" 
+                                   gif:ImageBehavior.AnimationSpeedRatio="10"
+                                   Visibility="{Binding GifVisibility}"/>
+                        </Grid>
+                    </WrapPanel>
+                </Border>
+                
+                <Border BorderThickness="3" 
+                        BorderBrush="{Binding BorderBrushColor[6]}" 
+                        CornerRadius="10" 
+                        IsEnabled="{Binding ActiveRow[6]}">
+                    
+                    <WrapPanel HorizontalAlignment="Left" 
+                               VerticalAlignment="Center">
+                        
+                        <Grid x:Uid="1" 
+                              Margin="7.5,0,7.5,0" 
+                              Width="30" 
+                              Height="30" 
+                              Drop="PanelDrop" >
+                            <local:GameBoardCircle/>
+                        </Grid>
+                        
+                        <Grid x:Uid="2" 
+                              Margin="7.5,0,7.5,0" 
+                              Width="30" 
+                              Height="30" 
+                              Drop="PanelDrop" >
+                            <local:GameBoardCircle/>
+                        </Grid>
+                        
+                        <Grid x:Uid="3" 
+                              Margin="7.5,0,7.5,0" 
+                              Width="30" 
+                              Height="30" 
+                              Drop="PanelDrop" >
+                            <local:GameBoardCircle/>
+                        </Grid>
+                        
+                        <Grid x:Uid="4" 
+                              Margin="7.5,0,7.5,0" 
+                              Width="30" 
+                              Height="30" 
+                              Drop="PanelDrop" >
+                            <local:GameBoardCircle/>
+                        </Grid>
+                        
+                        <Border BorderThickness="3" 
+                                CornerRadius="10" 
+                                Margin="7.5,0,7.5,0">
+                            
+                            <Border.Background>
+                                <SolidColorBrush Color="White" 
+                                                 Opacity="0.5"/>
+                            </Border.Background>
+                            
+                            <WrapPanel Height="30" Width="30">
+                                
+                                <Ellipse Width="13" 
+                                         Height="13" 
+                                         Margin="1" 
+                                         Fill="{Binding HintArray[6][0], FallbackValue = Transparent}"/>
+                                
+                                <Ellipse Width="13" 
+                                         Height="13" 
+                                         Margin="1" 
+                                         Fill="{Binding HintArray[6][1], FallbackValue = Transparent}"/>
+                                
+                                <Ellipse Width="13" 
+                                         Height="13" 
+                                         Margin="1" 
+                                         Fill="{Binding HintArray[6][2], FallbackValue = Transparent}"/>
+                                
+                                <Ellipse Width="13" 
+                                         Height="13" 
+                                         Margin="1" 
+                                         Fill="{Binding HintArray[6][3], FallbackValue = Transparent}"/>
+                                
+                            </WrapPanel>
+                        </Border>
+                    </WrapPanel>
+                </Border>
+
+                <Border BorderThickness="3" 
+                        BorderBrush="{Binding BorderBrushColor[5]}" 
+                        CornerRadius="10" 
+                        IsEnabled="{Binding ActiveRow[5]}">
+                    
+                    <WrapPanel HorizontalAlignment="Left" 
+                               VerticalAlignment="Center">
+                        
+                        <Grid x:Uid="1" 
+                              Margin="7.5,0,7.5,0" 
+                              Width="30" 
+                              Height="30" 
+                              Drop="PanelDrop" >
+                            <local:GameBoardCircle/>
+                        </Grid>
+                        
+                        <Grid x:Uid="2" 
+                              Margin="7.5,0,7.5,0"
+                              Width="30" 
+                              Height="30" 
+                              Drop="PanelDrop" >
+                            <local:GameBoardCircle/>
+                        </Grid>
+                        
+                        <Grid x:Uid="3" 
+                              Margin="7.5,0,7.5,0" 
+                              Width="30" 
+                              Height="30" 
+                              Drop="PanelDrop" >
+                            <local:GameBoardCircle/>
+                        </Grid>
+                        
+                        <Grid x:Uid="4" 
+                              Margin="7.5,0,7.5,0" 
+                              Width="30" 
+                              Height="30" 
+                              Drop="PanelDrop" >
+                            <local:GameBoardCircle/>
+                        </Grid>
+                        
+                        <Border BorderThickness="3" 
+                                CornerRadius="10" 
+                                Margin="7.5,0,7.5,0">
+                            
+                            <Border.Background>
+                                <SolidColorBrush Color="White" 
+                                                 Opacity="0.5"/>
+                                
+                            </Border.Background>
+                            
+                            <WrapPanel Height="30" 
+                                       Width="30">
+                                
+                                <Ellipse Width="13" 
+                                         Height="13" 
+                                         Margin="1" 
+                                         Fill="{Binding HintArray[5][0], FallbackValue = Transparent}"/>
+                                
+                                <Ellipse Width="13" 
+                                         Height="13" 
+                                         Margin="1" 
+                                         Fill="{Binding HintArray[5][1], FallbackValue = Transparent}"/>
+                                
+                                <Ellipse Width="13" 
+                                         Height="13"
+                                         Margin="1" 
+                                         Fill="{Binding HintArray[5][2], FallbackValue = Transparent}"/>
+                                
+                                <Ellipse Width="13" 
+                                         Height="13" 
+                                         Margin="1" 
+                                         Fill="{Binding HintArray[5][3], FallbackValue = Transparent}"/>
+                                
+                            </WrapPanel>
+                            
+                        </Border>
+                    </WrapPanel>
+                </Border>
+
+                <Border BorderThickness="3" 
+                        BorderBrush="{Binding BorderBrushColor[4]}" 
+                        CornerRadius="10" 
+                        IsEnabled="{Binding ActiveRow[4]}">
+                    
+                    <WrapPanel HorizontalAlignment="Left" 
+                               VerticalAlignment="Center">
+                        
+                        <Grid x:Uid="1" 
+                              Margin="7.5,0,7.5,0" 
+                              Width="30" 
+                              Height="30" 
+                              Drop="PanelDrop" >
+                            <local:GameBoardCircle/>
+                        </Grid>
+                        
+                        <Grid x:Uid="2" 
+                              Margin="7.5,0,7.5,0" 
+                              Width="30" 
+                              Height="30" 
+                              Drop="PanelDrop" >
+                            <local:GameBoardCircle/>
+                        </Grid>
+                        
+                        <Grid x:Uid="3" 
+                              Margin="7.5,0,7.5,0" 
+                              Width="30" 
+                              Height="30" 
+                              Drop="PanelDrop" >
+                            <local:GameBoardCircle/>
+                        </Grid>
+                        
+                        <Grid x:Uid="4" 
+                              Margin="7.5,0,7.5,0" 
+                              Width="30" 
+                              Height="30" 
+                              Drop="PanelDrop" >
+                            <local:GameBoardCircle/>
+                        </Grid>
+                        
+                        <Border BorderThickness="3" 
+                                CornerRadius="10" 
+                                Margin="7.5,0,7.5,0">
+                            
+                            <Border.Background>
+                                <SolidColorBrush Color="White"
+                                                 Opacity="0.5"/>
+                            </Border.Background>
+                            
+                            <WrapPanel Height="30" 
+                                       Width="30">
+                                
+                                <Ellipse Width="13" 
+                                         Height="13" 
+                                         Margin="1" 
+                                         Fill="{Binding HintArray[4][0], FallbackValue = Transparent}"/>
+                                
+                                <Ellipse Width="13" 
+                                         Height="13" 
+                                         Margin="1" 
+                                         Fill="{Binding HintArray[4][1], FallbackValue = Transparent}"/>
+                                
+                                <Ellipse Width="13" 
+                                         Height="13" 
+                                         Margin="1" 
+                                         Fill="{Binding HintArray[4][2], FallbackValue = Transparent}"/>
+                                
+                                <Ellipse Width="13" 
+                                         Height="13" 
+                                         Margin="1" 
+                                         Fill="{Binding HintArray[4][3], FallbackValue = Transparent}"/>
+                            </WrapPanel>
+                        </Border>
+                    </WrapPanel>
+                </Border>
+
+                <Border BorderThickness="3" 
+                        BorderBrush="{Binding BorderBrushColor[3]}" 
+                        CornerRadius="10" 
+                        IsEnabled="{Binding ActiveRow[3]}">
+                    
+                    <WrapPanel HorizontalAlignment="Left" 
+                               VerticalAlignment="Center">
+                        
+                        <Grid x:Uid="1" 
+                              Margin="7.5,0,7.5,0" 
+                              Width="30" 
+                              Height="30" 
+                              Drop="PanelDrop">
+                            <local:GameBoardCircle/>
+                        </Grid>
+                        
+                        <Grid x:Uid="2" 
+                              Margin="7.5,0,7.5,0" 
+                              Width="30" 
+                              Height="30" 
+                              Drop="PanelDrop">
+                            <local:GameBoardCircle/>
+                        </Grid>
+                        
+                        <Grid x:Uid="3" 
+                              Margin="7.5,0,7.5,0" 
+                              Width="30" 
+                              Height="30" 
+                              Drop="PanelDrop">
+                            <local:GameBoardCircle/>
+                        </Grid>
+                        
+                        <Grid x:Uid="4" 
+                              Margin="7.5,0,7.5,0" 
+                              Width="30" 
+                              Height="30" 
+                              Drop="PanelDrop" >
+                            <local:GameBoardCircle/>
+                        </Grid>
+                        
+                        <Border BorderThickness="3" 
+                                CornerRadius="10" 
+                                Margin="7.5,0,7.5,0"
+                                >
+                            
+                            <Border.Background>
+                                <SolidColorBrush Color="White" 
+                                                 Opacity="0.5"
+                                                 />
+                            </Border.Background>
+                            
+                            <WrapPanel Height="30" 
+                                       Width="30">
+
+                                <Ellipse Width="13" 
+                                         Height="13" 
+                                         Margin="1" 
+                                         Fill="{Binding HintArray[3][0], FallbackValue = Transparent}"/>
+
+                                <Ellipse Width="13" 
+                                         Height="13" 
+                                         Margin="1" 
+                                         Fill="{Binding HintArray[3][1], FallbackValue = Transparent}"/>
+                                
+                                <Ellipse Width="13" 
+                                         Height="13" 
+                                         Margin="1" 
+                                         Fill="{Binding HintArray[3][2], FallbackValue = Transparent}"/>
+                                
+                                <Ellipse Width="13" 
+                                         Height="13" 
+                                         Margin="1" 
+                                         Fill="{Binding HintArray[3][3], FallbackValue = Transparent}"/>
+                                
+                            </WrapPanel>
+                        </Border>
+                    </WrapPanel>
+                </Border>
+
+                <Border BorderThickness="3" 
+                        BorderBrush="{Binding BorderBrushColor[2]}" 
+                        CornerRadius="10" 
+                        IsEnabled="{Binding ActiveRow[2]}">
+                    
+                    <WrapPanel HorizontalAlignment="Left" VerticalAlignment="Center">
+                        <Grid x:Uid="1" 
+                              Margin="7.5,0,7.5,0" 
+                              Width="30" 
+                              Height="30"
+                              Drop="PanelDrop" >
+                            <local:GameBoardCircle/>
+                        </Grid>
+                        
+                        <Grid x:Uid="2" 
+                              Margin="7.5,0,7.5,0" 
+                              Width="30" 
+                              Height="30" 
+                              Drop="PanelDrop" >
+                            <local:GameBoardCircle/>
+                        </Grid>
+                        
+                        <Grid x:Uid="3" 
+                              Margin="7.5,0,7.5,0" 
+                              Width="30" 
+                              Height="30" Drop="PanelDrop" >
+                            <local:GameBoardCircle/>
+                        </Grid>
+                        
+                        <Grid x:Uid="4" 
+                              Margin="7.5,0,7.5,0" 
+                              Width="30" 
+                              Height="30" 
+                              Drop="PanelDrop" >
+                            <local:GameBoardCircle/>
+                        </Grid>
+                        
+                        <Border BorderThickness="3" 
+                                CornerRadius="10" 
+                                Margin="7.5,0,7.5,0">
+                            
+                            <Border.Background>
+                                <SolidColorBrush Color="White" 
+                                                 Opacity="0.5"/>
+                            </Border.Background>
+                            
+                            <WrapPanel Height="30" 
+                                       Width="30">
+                                <Ellipse Width="13" 
+                                         Height="13" 
+                                         Margin="1" 
+                                         Fill="{Binding HintArray[2][0], FallbackValue = Transparent}"/>
+                                
+                                <Ellipse Width="13" 
+                                         Height="13" 
+                                         Margin="1" 
+                                         Fill="{Binding HintArray[2][1], FallbackValue = Transparent}"/>
+                                
+                                <Ellipse Width="13" 
+                                         Height="13" 
+                                         Margin="1" 
+                                         Fill="{Binding HintArray[2][2], FallbackValue = Transparent}"/>
+                                
+                                <Ellipse Width="13" 
+                                         Height="13" 
+                                         Margin="1" 
+                                         Fill="{Binding HintArray[2][3], FallbackValue = Transparent}"/>
+                                
+                            </WrapPanel>
+                        </Border>
+                    </WrapPanel>
+                </Border>
+
+                <Border BorderThickness="3" 
+                        BorderBrush="{Binding BorderBrushColor[1]}" 
+                        CornerRadius="10" 
+                        IsEnabled="{Binding ActiveRow[1]}">
+                    
+                    <WrapPanel HorizontalAlignment="Left" 
+                               VerticalAlignment="Center">
+                        
+                        <Grid x:Uid="1" 
+                              Margin="7.5,0,7.5,0" 
+                              Width="30" 
+                              Height="30" 
+                              Drop="PanelDrop" >
+                            <local:GameBoardCircle/>
+                        </Grid>
+                        
+                        <Grid x:Uid="2" 
+                              Margin="7.5,0,7.5,0" 
+                              Width="30" 
+                              Height="30" 
+                              Drop="PanelDrop" >
+                            <local:GameBoardCircle/>
+                        </Grid>
+                        
+                        <Grid x:Uid="3" 
+                              Margin="7.5,0,7.5,0" 
+                              Width="30" 
+                              Height="30" 
+                              Drop="PanelDrop" >
+                            <local:GameBoardCircle/>
+                        </Grid>
+                        
+                        <Grid x:Uid="4" 
+                              Margin="7.5,0,7.5,0" 
+                              Width="30" 
+                              Height="30" 
+                              Drop="PanelDrop" >
+                            <local:GameBoardCircle/>
+                        </Grid>
+                        
+                        <Border BorderThickness="3" 
+                                CornerRadius="10" 
+                                Margin="7.5,0,7.5,0">
+                            
+                            <Border.Background>
+                                <SolidColorBrush Color="White" 
+                                                 Opacity="0.5"/>
+                            </Border.Background>
+                            
+                            <WrapPanel Height="30" 
+                                       Width="30">
+                                
+                                <Ellipse Width="13" 
+                                         Height="13" 
+                                         Margin="1" 
+                                         Fill="{Binding HintArray[1][0], FallbackValue = Transparent}"/>
+                                
+                                <Ellipse Width="13" 
+                                         Height="13" 
+                                         Margin="1" 
+                                         Fill="{Binding HintArray[1][1], FallbackValue = Transparent}"/>
+                                
+                                <Ellipse Width="13" 
+                                         Height="13" 
+                                         Margin="1" 
+                                         Fill="{Binding HintArray[1][2], FallbackValue = Transparent}"/>
+                                
+                                <Ellipse Width="13" 
+                                         Height="13" 
+                                         Margin="1" 
+                                         Fill="{Binding HintArray[1][3], FallbackValue = Transparent}"/>
+                                
+                            </WrapPanel>
+                        </Border>
+                    </WrapPanel>
+                </Border>
+
+                <Border BorderThickness="3" 
+                        BorderBrush="{Binding BorderBrushColor[0]}" 
+                        CornerRadius="10" 
+                        IsEnabled="{Binding ActiveRow[0]}">
+                    
+                    <WrapPanel HorizontalAlignment="Left" 
+                               VerticalAlignment="Center">
+                        
+                        <Grid x:Uid="1" 
+                              Margin="7.5,0,7.5,0" 
+                              Width="30" 
+                              Height="30" 
+                              Drop="PanelDrop" >
+                            <local:GameBoardCircle/>
+                        </Grid>
+                        
+                        <Grid x:Uid="2" 
+                              Margin="7.5,0,7.5,0" 
+                              Width="30" 
+                              Height="30" 
+                              Drop="PanelDrop" >
+                            <local:GameBoardCircle/>
+                        </Grid>
+                        
+                        <Grid x:Uid="3" 
+                              Margin="7.5,0,7.5,0" 
+                              Width="30" 
+                              Height="30" 
+                              Drop="PanelDrop" >
+                            <local:GameBoardCircle/>
+                        </Grid>
+                        
+                        <Grid x:Uid="4" 
+                              Margin="7.5,0,7.5,0" 
+                              Width="30" 
+                              Height="30" 
+                              Drop="PanelDrop">
+                            <local:GameBoardCircle/>
+                        </Grid>
+                        
+                        <Border BorderThickness="3" 
+                                CornerRadius="10" 
+                                Margin="7.5,0,7.5,0">
+                            
+                            <Border.Background>
+                                <SolidColorBrush Color="White" 
+                                                 Opacity="0.5"/>
+                            </Border.Background>
+                            
+                            <WrapPanel Height="30" 
+                                       Width="30">
+                                
+                                <Ellipse Width="13" 
+                                         Height="13" 
+                                         Margin="1" 
+                                         Fill="{Binding HintArray[0][0], FallbackValue = Transparent}"/>
+                                
+                                <Ellipse Width="13" 
+                                         Height="13" 
+                                         Margin="1" 
+                                         Fill="{Binding HintArray[0][1], FallbackValue = Transparent}"/>
+                                
+                                <Ellipse Width="13" 
+                                         Height="13"
+                                         Margin="1" 
+                                         Fill="{Binding HintArray[0][2], FallbackValue = Transparent}"/>
+                                
+                                <Ellipse Width="13" 
+                                         Height="13" 
+                                         Margin="1" 
+                                         Fill="{Binding HintArray[0][3], FallbackValue = Transparent}"/>
+                            </WrapPanel>
+                        </Border>
+                    </WrapPanel>
+                </Border>
+
+                <Button Content="Check Answer" 
+                        Margin="10" 
+                        HorizontalAlignment="Left" 
+                        Style="{StaticResource RoundButtonTemplate}" 
+                        Command="{Binding NextRoundCommand}"
+                        FontSize="20" 
+                        FontWeight="Bold" 
+                        Width="200" 
+                        Height="32"/>
+            </StackPanel>
+            <!--#endregion-->
+            <!--#region Score and Time-->
+            <StackPanel Grid.Column="4" 
+                        MinHeight="450" 
+                        HorizontalAlignment="Right" >
+
+                <Label Foreground="White" 
+                       FontSize="30" 
+                       VerticalAlignment="Bottom" 
+                       HorizontalAlignment="Right" 
+                       Margin="0,50,25,0"  
+                       Content="Time:"/>
+
+                <Label Foreground="White" 
+                       FontSize="30" 
+                       VerticalAlignment="Bottom" 
+                       HorizontalAlignment="Right" 
+                       Margin="0,-10,25,0 " 
+                       Content="{Binding GameTimer, FallbackValue=00:00}"/>
+
+            </StackPanel>
+            
+            <StackPanel Grid.Column="4" 
+                        HorizontalAlignment="Left" 
+                        MinHeight="450">
+                
+                    <Label Foreground="White" 
+                           FontSize="30" 
+                           HorizontalAlignment="Left" 
+                           VerticalAlignment="Bottom"
+                           Margin="0,50,25,0"  
+                           Content="Score:" 
+                           Visibility="{Binding EndGameVisibility, FallbackValue=Hidden}"/>
+                    <Label Foreground="White" 
+                           FontSize="30" 
+                           HorizontalAlignment="Left" 
+                           VerticalAlignment="Bottom"
+                           Margin="0,-10,0,0"  
+                           Content="{Binding Score, FallbackValue=1000}" 
+                           Visibility="{Binding EndGameVisibility, FallbackValue=Hidden}"/>
+
+            </StackPanel>
+            <!--#endregion-->
+            <!--#region HelpView-->
+            <local:HelpView Grid.Column="1" 
+                            Grid.ColumnSpan="3" 
+                            x:Name="help" 
+                            HorizontalAlignment="Left" 
+                            Visibility="{Binding HelpViewVisibility, FallbackValue=Hidden}" 
+                            Margin="0,0,15,0">
+                <UserControl.Style>
+                    <Style>
+                        <Style.Triggers>
+                            <EventTrigger RoutedEvent="FrameworkElement.Loaded">
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation Storyboard.TargetProperty="Opacity" 
+                                                         Duration="00:00:02" 
+                                                         From="0" To="1"/>
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </EventTrigger>
+                            <Trigger Property="FrameworkElement.Visibility" 
+                                     Value="Hidden">
+                                <Setter Property="FrameworkElement.Opacity" 
+                                        Value="0"/>
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                </UserControl.Style>
+                
+            </local:HelpView>
+            
+            <Button Grid.Column="1" 
+                    Grid.ColumnSpan="3" 
+                    Content="X" 
+                    Style="{StaticResource RoundButtonTemplate}" 
+                    FontSize="15" 
+                    Width="32" 
+                    Height="32" 
+                    Visibility="{Binding HelpViewVisibility, FallbackValue=Hidden}" 
+                    Command="{Binding HelpCommand}" 
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Top" 
+                    Margin="150,15,0,0" >
+            </Button>
+            <ToggleButton 
+                    Grid.Column="0"
+                    Content="Mute"
+                    Margin="-100,300,0,35"
+                    Command="{Binding MuteCommand}" 
+                    Style="{StaticResource MuteButtonTemplate}">
+            </ToggleButton>
+            <!--#endregion-->
+        </Grid>
+        <!--#region Pictures wincondition-->
+     
+        <Image gif:ImageBehavior.AnimatedSource="/Resources/Picture/Winner.gif"  
+               gif:ImageBehavior.AnimationSpeedRatio="0.8" 
+               Visibility="{Binding WinOrLoss[0], FallbackValue=Hidden}" 
+               Margin="540,104,0,86"
+               MaxWidth="200"/>
+        
+        <Label Content="{Binding CountdownTimer, FallbackValue=3}" 
+               Visibility="{Binding TimerVisibility[0], FallbackValue=Visible}"
+               FontSize="300"
+               Foreground="White"
+               HorizontalAlignment="Center"
+               VerticalAlignment="Center" 
+               VerticalContentAlignment="Center"
+               HorizontalContentAlignment="Center"
+               Width="390">
+            <Label.Effect>
+                <DropShadowEffect/>
+            </Label.Effect>
+        </Label>
+        <!--#endregion-->
+    </Grid>
+</Page>
+ 

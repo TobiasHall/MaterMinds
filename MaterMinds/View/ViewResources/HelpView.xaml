@@ -1,0 +1,34 @@
+﻿<UserControl x:Class="MaterMinds.HelpView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:MaterMinds"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="400">
+    <Grid>
+        <Rectangle  HorizontalAlignment="Left" 
+              
+              Stroke="LightGray"
+              StrokeThickness="3"
+              Fill="Black"
+              Opacity="0.8"
+              Height="414"
+              Width="401" 
+              Stretch="Fill"
+              >
+        </Rectangle>
+
+        <TextBlock x:Name="HelpText"
+                   FontSize="16" 
+                   Background="Transparent" 
+                   Foreground="#b2cce5"
+                   HorizontalAlignment="Center"
+                   VerticalAlignment="Center"
+                   MaxHeight="300"
+                   MaxWidth="300"
+                   TextWrapping="Wrap"
+                   
+                   />
+    </Grid>
+</UserControl>
