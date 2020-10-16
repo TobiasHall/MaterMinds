@@ -180,7 +180,8 @@ namespace MaterMinds
             
             if (win)
             {
-                Score = game.CalculateScore(PlayedRounds, GameTimerInSecounds, GameTimerInMinutes);
+                int timer = GameTimerInSecounds + (GameTimerInMinutes * 60);
+                Score = game.CalculateScore(PlayedRounds, timer);
                 AddScoreToDB();
                 WinOrLoss[0] = Visibility.Visible;
             }

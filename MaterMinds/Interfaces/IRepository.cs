@@ -11,6 +11,8 @@
 
         public  void AddPlayer(string nickname);
 
+        public void StartDBConnection();
+
     }
 }
 

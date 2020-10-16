@@ -1,4 +1,5 @@
 ﻿using MaterMinds.Command;
+using MaterMinds.Interfaces;
 using MaterMinds.Model;
 using MaterMinds.View;
 using System.ComponentModel;
@@ -8,7 +9,7 @@ using System.Windows.Input;
 
 namespace MaterMinds
 {
-    public class BaseViewModel : INotifyPropertyChanged, INavigation
+    public class BaseViewModel : IMenuNavigationAndSound
     {
 
         public MainWindow Main = (MainWindow)Application.Current.MainWindow;

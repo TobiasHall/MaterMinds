@@ -7,39 +7,39 @@ namespace MaterMinds
 {
     public class GameEngine
     {
-        Random random = new Random();
+        private static readonly Random random = new Random();
 
         #region Properties
-        private Dictionary<int, int> CorrectAnswer { get; set; } = new Dictionary<int, int>();
-        private Brush[] HintToAnswer { get; set; }
-        private int[] CheckForDoubles { get; set; }
-        private int[] SortedAnswerArray { get; set; }
+        private Dictionary<int, int> correctAnswer  = new Dictionary<int, int>();
+        private Brush[] hintToAnswer;
+        private int[] checkForDoubles;
+        private int[] sortedPlayersPegsInArray;
         #endregion
 
         public GameEngine()
         {
-            StartGame();
+            RandomizeAnswer();
         }
 
         #region GameLogic
 
-        private void SortAnswerArray(Dictionary<int, int> playerGuess)
+        private void SortPlayersPlacedPegs(Dictionary<int, int> keyAndColorIndex)
         {
-            for (int i = 0; i < playerGuess.Count; i++)
+            for (int i = 0; i < keyAndColorIndex.Count; i++)
             {
-                switch (playerGuess.ElementAt(i).Key)
+                switch (keyAndColorIndex.ElementAt(i).Key)
                 {
                     case 1:
-                        SortedAnswerArray[0] = playerGuess.ElementAt(i).Value;
+                        sortedPlayersPegsInArray[0] = keyAndColorIndex.ElementAt(i).Value;
                         break;
                     case 2:
-                        SortedAnswerArray[1] = playerGuess.ElementAt(i).Value;
+                        sortedPlayersPegsInArray[1] = keyAndColorIndex.ElementAt(i).Value;
                         break;
                     case 3:
-                        SortedAnswerArray[2] = playerGuess.ElementAt(i).Value;
+                        sortedPlayersPegsInArray[2] = keyAndColorIndex.ElementAt(i).Value;
                         break;
                     case 4:
-                        SortedAnswerArray[3] = playerGuess.ElementAt(i).Value;
+                        sortedPlayersPegsInArray[3] = keyAndColorIndex.ElementAt(i).Value;
                         break;
                 }
             }
@@ -47,29 +47,29 @@ namespace MaterMinds
 
         private void SortHintArray()
         {
-            Array.Sort(HintToAnswer);
-            Array.Reverse(HintToAnswer);
+            Array.Sort(hintToAnswer);
+            Array.Reverse(hintToAnswer);
         }
 
         private void CopyAnswerArray()
         {
             for (int i = 0; i < 4; i++)
             {
-                CheckForDoubles[i] = CorrectAnswer.ElementAt(i).Value;
+                checkForDoubles[i] = correctAnswer.ElementAt(i).Value;
             }
         }
 
         private void SetWhitePegs()
         {
-            for (int i = 0; i < SortedAnswerArray.Length; i++)
+            for (int i = 0; i < sortedPlayersPegsInArray.Length; i++)
             {
-                for (int j = 0; j < CorrectAnswer.Count; j++)
+                for (int j = 0; j < correctAnswer.Count; j++)
                 {
-                    if (SortedAnswerArray[i] == CheckForDoubles[j] )
+                    if (sortedPlayersPegsInArray[i] == checkForDoubles[j] )
                     {
-                        HintToAnswer[i] = Brushes.White;
+                        hintToAnswer[i] = Brushes.White;
                         //Set the value to 10 so it never hits again. 
-                        CheckForDoubles[j] = 10;
+                        checkForDoubles[j] = 10;
                         break;
                     }
                 }
@@ -79,11 +79,11 @@ namespace MaterMinds
         private void SetBlackPegs()
         {
             int counter = 0;
-            for (int i = 0; i < CorrectAnswer.Count; i++)
+            for (int i = 0; i < correctAnswer.Count; i++)
             {
-                if (SortedAnswerArray[i] == CorrectAnswer.ElementAt(i).Value)
+                if (sortedPlayersPegsInArray[i] == correctAnswer.ElementAt(i).Value)
                 {
-                    HintToAnswer[counter] = Brushes.Black;
+                    hintToAnswer[counter] = Brushes.Black;
                     counter++;
                 }
             }
@@ -91,36 +91,36 @@ namespace MaterMinds
 
         private void ClearAllProps()
         {
-            HintToAnswer = new Brush[4];
-            CheckForDoubles = new int[4];
-            SortedAnswerArray = new int[4];
+            hintToAnswer = new Brush[4];
+            checkForDoubles = new int[4];
+            sortedPlayersPegsInArray = new int[4];
         }
 
-        public Brush[] CheckPegPosition(Dictionary<int, int> playerGuess)
+        public Brush[] CheckPegPosition(Dictionary<int, int> playersPlacedPegs)
         {
             ClearAllProps();
             CopyAnswerArray();
-            SortAnswerArray(playerGuess);
+            SortPlayersPlacedPegs(playersPlacedPegs);
             SetWhitePegs();
             SortHintArray();
             SetBlackPegs();
-            return HintToAnswer;
+            return hintToAnswer;
         }
 
-        public bool CheckIfWin(Dictionary<int, int> playerGuess)
+        public bool CheckIfWin(Dictionary<int, int> playersPlacedPegs)
         {
             int counter = 0; 
-            foreach (var c in playerGuess)
+            foreach (var playerKeyAndValue in playersPlacedPegs)
             {
-                foreach (var b in CorrectAnswer)
+                foreach (var answerKeyAndValue in correctAnswer)
                 {
-                    if (c.Key == b.Key && c.Value == b.Value)
+                    if (playerKeyAndValue.Key == answerKeyAndValue.Key && playerKeyAndValue.Value == answerKeyAndValue.Value)
                     {
                         counter++; 
                     }
                 }
             }
-            if (counter == CorrectAnswer.Count)
+            if (counter == correctAnswer.Count)
             {
                 return true; 
             }
@@ -129,12 +129,11 @@ namespace MaterMinds
 
         public Dictionary<int, int> GetCorrectAnswer()
         {
-            return CorrectAnswer;
+            return correctAnswer;
         }
-        public int CalculateScore(int tries, int timerInSecounds, int timerInMinutes)
+        public int CalculateScore(int tries, int timer)
         {
             int score = 10000;
-            int timer = timerInSecounds + (timerInMinutes * 60);
             score -= (tries * 1489) + timer*3;
             if (score <= 0)
             {
@@ -144,11 +143,11 @@ namespace MaterMinds
         }
         #endregion
 
-        public void StartGame()
+        public void RandomizeAnswer()
         {
             for (int i = 1; i <= 4; i++)
             {
-                CorrectAnswer.Add(i, random.Next(1, 7));
+                correctAnswer.Add(i, random.Next(1, 7));
             }
         }
     }

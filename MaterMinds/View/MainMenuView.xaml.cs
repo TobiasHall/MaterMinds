@@ -13,12 +13,12 @@ namespace MaterMinds.View
             InitializeComponent();
             model = new MainMenuViewModel();
             DataContext = model;
-            PlayBackground();
+            PlayBackgroundMusic();
         }
 
-        private void PlayBackground()
+        private void PlayBackgroundMusic()
         {
-            MediaHelper.PlayMedia(MediaHelper._backgroundPlayer, new Uri(@"Resources/Sound/Spacemusic.mp3", UriKind.Relative));
+            MediaHelper.PlayMedia(MediaHelper.backgroundPlayer, new Uri(@"Resources/Sound/Spacemusic.mp3", UriKind.Relative));
         }
 
     }

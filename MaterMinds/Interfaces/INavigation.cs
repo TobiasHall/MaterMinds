@@ -7,7 +7,6 @@ namespace MaterMinds.Command
         public ICommand MainMenuCommand { get; set; }
         public ICommand ViewTopHighscoreCommand { get; set; }
         public ICommand ViewTopFrequentPlayersCommand { get; set; }
-        public ICommand MuteCommand { get; set; }
 
         void GetMainMenuView(object parameter);
 

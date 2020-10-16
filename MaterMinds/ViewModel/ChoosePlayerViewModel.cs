@@ -37,17 +37,25 @@ namespace MaterMinds
 
         private void CreatePlayer(object parameter)
         {
-            try
+            if (Nickname == null)
             {
-                int playerID = Repository.AddPlayer(Nickname);
-                Player player = new Player(playerID, Nickname);
-                GetPlayers();
-                HighlightSelectedPlayer();
+                MessageBox.Show("You forgot to write your nickname first");
             }
-            catch (PostgresException ex)
+            else
             {
-                var code = ex.SqlState;
-                MessageBox.Show($"Nickname {Nickname} already in use!");
+                try
+                {
+                    int playerID = Repository.AddPlayer(Nickname);
+                    Player player = new Player(playerID, Nickname);
+                    GetPlayers();
+                    HighlightSelectedPlayer();
+                }
+                catch (PostgresException ex)
+                {
+                    var code = ex.SqlState;
+                    MessageBox.Show($"Nickname {Nickname} already in use!");
+                }
+
             }
         }
 

@@ -35,7 +35,8 @@ namespace MaterMinds.ViewModel
             {
                 MessageBox.Show($"Couldn´t connect to the database. " +
                     $"Check your internet connection. If the problem remains " +
-                    $"call our customer service on 1-87-ESPN-IS-KING. Our opening hours are 05:00 AM to 05:01 AM");
+                    $"call our customer service on 1-87-ESPN-IS-KING. " +
+                    $"Our opening hours are 05:00 AM to 05:01 AM");
                 CloseApplication(true);
             }
         }

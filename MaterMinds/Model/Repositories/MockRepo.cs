@@ -27,5 +27,10 @@ namespace MaterMinds.Model.Repositories
         {
             throw new NotImplementedException();
         }
+
+        public void StartDBConnection()
+        {
+            throw new NotImplementedException();
+        }
     }
 }
