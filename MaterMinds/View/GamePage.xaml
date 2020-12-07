@@ -822,13 +822,13 @@
         
         <Label Content="{Binding CountdownTimer, FallbackValue=3}" 
                Visibility="{Binding TimerVisibility[0], FallbackValue=Visible}"
-               FontSize="300"
+               FontSize="30"
                Foreground="White"
                HorizontalAlignment="Center"
                VerticalAlignment="Center" 
                VerticalContentAlignment="Center"
                HorizontalContentAlignment="Center"
-               Width="390">
+               Width="39">
             <Label.Effect>
                 <DropShadowEffect/>
             </Label.Effect>

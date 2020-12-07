@@ -138,31 +138,11 @@ namespace MaterMinds
             {
                 TimerVisibility[0] = Visibility.Hidden;
                 TimerVisibility[1] = Visibility.Visible;
-                if (GameTimerInSecounds == 59)
-                {
-                    GameTimerInMinutes++;
-                    GameTimerInSecounds = 0;
-                }
-                else
-                {
-                    GameTimerInSecounds++;
-                }
-                if (GameTimerInSecounds < 10 && GameTimerInMinutes < 10)
-                {
-                    GameTimer = $"0{GameTimerInMinutes}:0{GameTimerInSecounds}";
-                }
-                else if(GameTimerInMinutes >= 10 && GameTimerInSecounds >= 10)
-                {
-                    GameTimer = $"{GameTimerInMinutes}:{GameTimerInSecounds}";
-                }
-                else if (GameTimerInMinutes >= 10 && GameTimerInSecounds < 10)
-                {
-                    GameTimer = $"{GameTimerInMinutes}:0{GameTimerInSecounds}";
-                }
-                else
-                {
-                    GameTimer = $"0{GameTimerInMinutes}:{GameTimerInSecounds}";
-                }
+                
+                GameTimerInSecounds++;
+                GameTimer = GameTimerInSecounds.ToString();
+                GameTimer = String.Format("00:{0:D2}:{1:D2}", GameTimerInSecounds / 60, GameTimerInSecounds % 60);
+                
             }
             else
             {
