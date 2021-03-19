@@ -22,7 +22,8 @@ The project is created with:
 * .NET Core version: 3.0
 * C# version: 8.0
 * PostgreSQL
-* SQL* 
+* SQL
+* MVVM 
 * Interface
 * Drag-and-drop functionality
 
