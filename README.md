@@ -13,6 +13,7 @@ compete against the computer to solve a hidden patterna.
 
 ## General Info
 ![How the game page looks like!](/materminds.png "Game page")
+<br/>
 This game was a group assignment to create a code-breaking game 
 from scratch with requirements that we would create and build 
 our own database that the game would use.
